@@ -1,0 +1,92 @@
+{
+  "finances_transactions": [
+    {
+      "id": 1,
+      "name": "Aluguel",
+      "date": "2026-03-25",
+      "amount": 500,
+      "type": "EXPENSE",
+      "category": "Aluguel",
+      "method": "Pix",
+      "createdAt": "",
+      "editedAt": "" 
+    },
+    {
+      "id": 2,
+      "name": "Ifood",
+      "date": "2026-03-25",
+      "amount": 45.99,
+      "type": "EXPENSE",
+      "category": "Lazer",
+      "method": "Cartão de crédito",
+      "createdAt": "",
+      "editedAt": "" 
+    },
+    {
+      "id": 3,
+      "name": "99",
+      "date": "2026-03-25",
+      "amount": 300,
+      "type": "INCOME",
+      "category": "99Entregador",
+      "method": "Pix",
+      "createdAt": "",
+      "editedAt": "" 
+    },
+    {
+      "id": 4,
+      "name": "Salário",
+      "date": "2026-03-25",
+      "amount": 1800,
+      "type": "INCOME",
+      "category": "Salário",
+      "method": "Pix",
+      "createdAt": "",
+      "editedAt": "" 
+    },
+        {
+      "id": 5,
+      "name": "Aluguel",
+      "date": "2026-03-25",
+      "amount": 500,
+      "type": "EXPENSE",
+      "category": "Aluguel",
+      "method": "Pix",
+      "createdAt": "",
+      "editedAt": "" 
+    },
+    {
+      "id": 6,
+      "name": "Ifood",
+      "date": "2026-03-25",
+      "amount": 45.99,
+      "type": "EXPENSE",
+      "category": "Lazer",
+      "method": "Cartão de crédito",
+      "createdAt": "",
+      "editedAt": "" 
+    },
+    {
+      "id": 7,
+      "name": "99",
+      "date": "2026-03-25",
+      "amount": 300,
+      "type": "INCOME",
+      "category": "99Entregador",
+      "method": "Pix",
+      "createdAt": "",
+      "editedAt": "" 
+    },
+    {
+      "id": 8,
+      "name": "Salário",
+      "date": "2026-03-25",
+      "amount": 1800,
+      "type": "INCOME",
+      "category": "Salário",
+      "method": "Pix",
+      "createdAt": "",
+      "editedAt": "" 
+    }
+  ]
+}
