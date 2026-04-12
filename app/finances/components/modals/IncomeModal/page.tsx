@@ -1,24 +1,23 @@
-"use client"
+"use client";
 
-import { Box, Button, FormControl, Input, InputLabel, MenuItem, Modal, Paper, Select, SelectChangeEvent, Typography } from "@mui/material"
+import { Box, Button, FormControl, Input, InputLabel, MenuItem, Modal, Paper, Select, Typography } from "@mui/material"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useState } from "react"
 import CloseIcon from '@mui/icons-material/Close';
 import { Controller, useForm } from "react-hook-form";
-import { addTansactionSchema, AddTansactionSchema } from './schema';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useFinance } from "@/api/finances/page";
+import { AddTansactionSchema, addTansactionSchema } from "../Schema/page";
 
 export const IncomeModal = () => {
 
-    const { control, register, handleSubmit, formState: { errors } } = useForm({
+    const { mutate } = useFinance()
+    const { control, register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(addTansactionSchema),
         mode: "onChange",
         defaultValues: {
-            name: "",
-            amount: 0, 
             category: "",
-            method: "",
-            date: new Date().toISOString().split('T')[0]
+            method: ""
         }
     })
 
@@ -27,9 +26,21 @@ export const IncomeModal = () => {
     const handleClose = () => setOpen(false)
 
 
-    const handleOnSubmit = (data: AddTansactionSchema | undefined) => {
-        console.log(data)
-        handleClose()
+    const handleOnSubmit = (formData: AddTansactionSchema) => {
+        const fullData = {
+            ...formData,
+            type: "INCOME"
+        }
+
+        mutate(fullData, {
+            onSuccess: () => {
+                handleClose();
+                reset()
+            },
+            onError: (error) => {
+                console.log("Erro ao salvar: ", error)
+            }
+        })
     }
 
 
@@ -123,7 +134,12 @@ export const IncomeModal = () => {
                             <FormControl className="col-span-1">
                                 <Input required {...register("date")} id="date" type="date" />
                             </FormControl>
-                            <Button type="submit" variant="contained">Enviar</Button>
+                            <Button className="col-end-4 row-end-9 w-25! h-10!" 
+                                type="submit" 
+                                variant="contained"
+                            >
+                                Enviar
+                            </Button>
                         </Box>
                     </Box>
                 </Modal>

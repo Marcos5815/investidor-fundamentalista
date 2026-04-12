@@ -1,3 +1,5 @@
+"use client"
+
 import * as z from "zod"; 
 
 
@@ -7,7 +9,7 @@ export const addTansactionSchema = z.object({
         z.coerce.number().positive("O valor deve ser maior que zero")),
     category: z.string(),
     method: z.string(),
-    date: z.coerce.date().refine((val) => val <= new Date(), "A data não pode estar no futuro")
+    date: z.coerce.date()
 })
 
 export type AddTansactionSchema = z.infer<typeof addTansactionSchema>

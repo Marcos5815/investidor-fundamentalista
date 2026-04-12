@@ -11,10 +11,12 @@ const Finances = () => {
         <Box>
             <Header />
             <BalanceIncomesExpenses />
-            <AddTransactions />
-            <Box className="grid grid-rows-1 grid-cols-3 gap-20 ml-17 mr-17 mt-5">
-                <ExpenseByCategory component={Paper} className="col-span-1 mr-9 h-114.5" />
-                <LastTransactions component={Paper} className="col-span-2 ml-5 h-114.5" />
+            <Box className="flex justify-around mt-10">
+                <ExpenseByCategory component={Paper} className="w-114" />
+                <Box className="flex flex-col gap-10">
+                    <AddTransactions className=""/>
+                    <LastTransactions component={Paper} className="" />
+                </Box>
             </Box>
         </Box>
     )

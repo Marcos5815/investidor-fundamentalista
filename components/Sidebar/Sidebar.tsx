@@ -25,7 +25,7 @@ export const Sidebar = () => {
 
 
     return(
-        <Box component={Paper} className="ml-5 mt-5 w-30 h-215.5 flex flex-col items-center">
+        <Box component={Paper} className="ml-5 mt-10 w-30 h-221.7 flex flex-col items-center">
             <Box className="p-2 mt-5 ml-3">
                 <Image src="/logo.png" width={80} height={25}  alt='Logo' />
             </Box>

@@ -1,14 +1,141 @@
 "use client"
+import { useFinance } from "@/api/finances/page"
 import { Box, Paper, Typography } from "@mui/material"
+import { useSearchParams } from "next/navigation"
+import { useMemo } from "react"
+import { date } from "zod"
 
 export const BalanceIncomesExpenses = () => {
+
+    const searchParams = useSearchParams();
+    const filterPeriod = searchParams.get('period');
+    const startDate = searchParams.get('start');
+    const endDate = searchParams.get('end');
+    const { data, isLoading, error } = useFinance();
 
     const formattedNumber = new Intl.NumberFormat(
         "pt-BR", {
             style: "currency",
             currency: "BRL"
         }
-    )
+    );
+
+    const balance = useMemo(() => {
+        if(!data) return 0;
+
+        if(filterPeriod === "last-12-months") {
+            const today = new Date();
+            const twelveMonthsAgo = new Date();
+            twelveMonthsAgo.setFullYear(today.getFullYear() - 1);
+
+            return data
+                .filter((transaction) => {
+                    const transactionDate = new Date(transaction.date)
+                    return transactionDate <= today && transactionDate >= twelveMonthsAgo
+                })
+                .reduce((acc, current) => {
+                    return current.type === "INCOME" ? acc + current.amount : acc - current.amount;
+                }, 0)
+        }
+
+        if(startDate && endDate) {
+            return data
+                .filter((transaction) => {
+                    return transaction.date >= startDate && transaction.date <= endDate;
+                })
+                .reduce((acc, current) => {
+                    return current.type === "INCOME" ? acc + current.amount : acc - current.amount;
+                }, 0)
+        }
+
+        return data
+        .filter((transaction) => {
+            if(!filterPeriod) return data;
+            return transaction.date.startsWith(filterPeriod)
+        })
+        .reduce((acc, current) => {
+            return current.type === "INCOME" ? acc + current.amount : acc - current.amount
+        }, 0)
+    }, [data, filterPeriod, startDate, endDate])
+
+    
+
+    const income = useMemo(() => {
+        if(!data) return 0;
+
+        if(filterPeriod === "last-12-months"){
+            const today = new Date();
+            const twelveMonthsAgo = new Date();
+            twelveMonthsAgo.setFullYear(today.getFullYear() - 1);
+
+            return data
+                .filter((transaction) => {
+                    const transactionDate = new Date(transaction.date)
+                    return transactionDate >= twelveMonthsAgo && transactionDate <= today;
+                })
+                .reduce((acc, current) => {
+                    return current.type === "INCOME" ? acc + current.amount : acc;
+                }, 0)
+        }
+
+        if(startDate && endDate) {
+            return data
+                .filter((transaction) => {
+                    return transaction.date >= startDate && transaction.date <= endDate;
+                })
+                .reduce((acc, current) => {
+                    return current.type === "INCOME" ? acc + current.amount : acc
+                }, 0)
+        }
+
+        return data
+        .filter((transaction) => {
+            if(!filterPeriod) return data;
+            return transaction.date.startsWith(filterPeriod);
+        }).reduce((acc, current) => {
+            return current.type === "INCOME" ? acc + current.amount : acc
+        }, 0)
+    }, [data, filterPeriod, startDate, endDate])
+
+
+    const expense = useMemo(() => {
+        if(!data) return 0;
+
+        if(filterPeriod === "last-12-months"){
+            const today = new Date();
+            const twelveMonthsAgo = new Date();
+            twelveMonthsAgo.setFullYear(today.getFullYear() - 1);
+
+            return data
+                .filter((transaction) => {
+                    const transactionDate = new Date(transaction.date)
+                    return transactionDate >= twelveMonthsAgo && transactionDate <= today;
+                })
+                .reduce((acc, current) => {
+                    return current.type === "EXPENSE" ? acc + current.amount : acc;
+                }, 0)
+        }
+
+        if(startDate && endDate) {
+            return data
+                .filter((transaction) => {
+                    return transaction.date >= startDate && transaction.date <= endDate;
+                })
+                .reduce((acc, current) => {
+                    return current.type === "EXPENSE" ? acc + current.amount : acc;
+                }, 0)
+        }
+
+        return data
+        .filter((transaction) => {
+            if(!filterPeriod) return data;
+            return transaction.date.startsWith(filterPeriod)
+        })
+        .reduce((acc, current) => {
+            return current.type === "EXPENSE" ? acc + current.amount : acc
+
+        }, 0)
+    }, [data, filterPeriod, startDate, endDate])
 
     return (
         <Box className="flex justify-around mt-20">
@@ -17,7 +144,7 @@ export const BalanceIncomesExpenses = () => {
                     Saldo
                 </Typography>
                 <Typography className="flex justify-start pt-5 pl-4 text-3xl! font-bold">
-                    {formattedNumber.format(200)}
+                    {!error && isLoading ? "..." : formattedNumber.format(balance)}
                 </Typography>
             </Box>
             <Box component={Paper} className="w-100 h-30">
@@ -25,7 +152,7 @@ export const BalanceIncomesExpenses = () => {
                     Entradas
                 </Typography>
                 <Typography className="flex justify-start pt-5 pl-4 text-3xl! font-bold">
-                    {formattedNumber.format(200)}
+                    {!error && isLoading ? "..." : formattedNumber.format(income)}
                 </Typography>
             </Box>
             <Box component={Paper} className="w-100 h-30">
@@ -33,7 +160,7 @@ export const BalanceIncomesExpenses = () => {
                     Saídas
                 </Typography>
                 <Typography className="flex justify-start pt-5 pl-4 text-3xl! font-bold">
-                    {formattedNumber.format(200)}
+                    {!error && isLoading ? "..." : formattedNumber.format(expense)}
                 </Typography>
             </Box>
         </Box>
