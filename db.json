@@ -89,24 +89,13 @@
       "editedAt": ""
     },
     {
-      "id": "FT4hl1oTjMM",
-      "name": "Ifood",
-      "amount": 200,
-      "category": "Renda extra",
-      "method": "pix",
-      "date": "2026-04-02T00:00:00.000Z",
-      "type": "INCOME",
-      "createdAt": "2026-04-02T01:31:51.439Z"
-    },
-    {
-      "id": "ALunZOFnVzg",
       "name": "test",
-      "amount": 20,
+      "amount": 200,
       "category": "13° Salári",
       "method": "Doc",
       "date": "2026-04-01T00:00:00.000Z",
-      "type": "INCOME",
-      "createdAt": "2026-04-02T01:44:26.781Z"
+      "editedAt": "2026-04-20T01:10:28.257Z",
+      "id": "ALunZOFnVzg"
     },
     {
       "id": "859vdN34Umo",
@@ -129,34 +118,15 @@
       "createdAt": "2026-04-05T00:53:04.348Z"
     },
     {
-      "id": "ydIwGkQiEH4",
-      "name": "astawer",
-      "amount": 125.25,
-      "category": "Renda extra",
-      "method": "pix",
-      "date": "2026-04-03T00:00:00.000Z",
-      "type": "INCOME",
-      "createdAt": "2026-04-05T01:54:46.183Z"
-    },
-    {
-      "id": "o0DvAxvTzng",
-      "name": "Ifood",
-      "amount": 22.5,
-      "category": "Veículos",
-      "method": "Doc",
-      "date": "2026-04-02T00:00:00.000Z",
-      "type": "EXPENSE",
-      "createdAt": "2026-04-05T17:19:06.644Z"
-    },
-    {
       "id": "Vd2Vr9U7o9g",
       "name": "aswetrqwer",
-      "amount": 250.5,
+      "amount": 500,
       "category": "Veículos",
       "method": "Cartão de crédito",
       "date": "2026-04-06T00:00:00.000Z",
       "type": "EXPENSE",
-      "createdAt": "2026-04-06T23:47:04.621Z"
+      "createdAt": "2026-04-06T23:47:04.621Z",
+      "editedAt": "2026-04-20T01:21:39.045Z"
     },
     {
       "id": "CXxmA5sBaPo",
@@ -287,6 +257,55 @@
       "date": "2026-04-10T00:00:00.000Z",
       "type": "INCOME",
       "createdAt": "2026-04-12T15:46:47.186Z"
+    },
+    {
+      "id": "m5D1iolNFU8",
+      "name": "new test",
+      "amount": 100,
+      "category": "Lazer",
+      "method": "pix",
+      "date": "2026-04-19T00:00:00.000Z",
+      "type": "EXPENSE",
+      "createdAt": "2026-04-20T00:29:16.696Z"
+    },
+    {
+      "name": "test date",
+      "amount": 50,
+      "category": "Salário",
+      "method": "pix",
+      "date": "2026-04-19T00:00:00.000Z",
+      "editedAt": "2026-04-20T01:00:07.928Z",
+      "id": "MqU0QT8aMcM"
+    },
+    {
+      "id": "rSb1J9gypSM",
+      "name": "test date 2",
+      "amount": 500,
+      "category": "Salário",
+      "method": "pix",
+      "date": "2026-04-19T00:00:00.000Z",
+      "type": "INCOME",
+      "createdAt": "2026-04-20T01:00:30.247Z",
+      "editedAt": "2026-04-20T01:20:09.488Z"
+    },
+    {
+      "id": "Qzn9-giEicQ",
+      "name": "test data 3",
+      "amount": 50,
+      "category": "Férias",
+      "method": "pix",
+      "date": "2026-04-19T00:00:00.000Z",
+      "type": "INCOME",
+      "createdAt": "2026-04-20T01:04:19.615Z"
+    },
+    {
+      "name": "test data 4",
+      "amount": 50,
+      "category": "Rendimentos",
+      "method": "pix",
+      "date": "2026-04-19T00:00:00.000Z",
+      "editedAt": "2026-04-20T01:10:57.782Z",
+      "id": "QBTcKpw7rqI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

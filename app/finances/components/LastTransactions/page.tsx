@@ -1,10 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useFinance } from "@/api/finances/page";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { DataTypes, useFinance } from "@/api/finances/page";
 import {
   Box,
+  Button,
+  ClickAwayListener,
+  Grow,
+  MenuItem,
+  MenuList,
   Paper,
+  Popper,
   Table,
   TableBody,
   TableCell,
@@ -14,7 +20,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useSearchParams } from "next/navigation";
+import { IncomeModal } from "../modals/IncomeModal/page";
+import { ExpenseModal } from '../modals/ExpenseModal/page';
 
 const formattedValue = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -23,7 +32,7 @@ const formattedValue = new Intl.NumberFormat('pt-BR', {
 
 export const LastTransactions = ({ ...props }) => {
   const searchParams = useSearchParams()
-  const { data, isLoading, error } = useFinance();
+  const { data, isLoading, error, deleteTransaction } = useFinance();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -31,6 +40,44 @@ export const LastTransactions = ({ ...props }) => {
   const periodFilter = searchParams.get('period');
   const startRangeDate = searchParams.get('start')
   const endRangeDate = searchParams.get('end')
+
+  const options = ["Editar", "Apagar"]
+
+  const [ transactionToEdit, setTransactionToEdit] = useState<DataTypes | null>(null)
+
+  const [ open, setOpen] = useState(false);
+  const [ selectedIndex, setSelectedIndex ] = useState(0);
+  const [ anchorEl, setAnchorEl ] = useState<HTMLElement | null>(null)
+  const anchorRef = useRef<HTMLElement>(null)
+
+  const [ selectId, setSelectId ] = useState<string>("")
+
+  const [ isIncomeModalOpen, setIsIncomeModalOpen ] = useState(false);
+  const [ isExpenseModalOpen, setIsExpenseModalOpen ] = useState(false)
+
+  useEffect(() => {
+    setAnchorEl(anchorRef.current)
+  }, []);
+
+  const handleOnToggle = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prevOpen) => !prevOpen);
+  }
+
+  const handleMenuItemclick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, index: number) => {
+    setSelectedIndex(index)
+    setOpen(false)
+  }
+
+  const handleClose = (event: Event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)){
+      return
+    }
+
+    setOpen(false);
+  }
+
+
 
   const filteredData = useMemo(() => {
     if(!data) return []
@@ -92,6 +139,7 @@ export const LastTransactions = ({ ...props }) => {
               <TableCell className="font-semibold!" align="right">
                 Método
               </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -103,7 +151,7 @@ export const LastTransactions = ({ ...props }) => {
                   return (
                     <TableRow key={datas.id}>
                       <TableCell>
-                        {new Date(datas.date).toLocaleDateString("pt-BR")}
+                        {new Date(datas.date).toLocaleDateString("pt-BR", { timeZone: "UTC" })}
                       </TableCell>
                       <TableCell>{datas.name}</TableCell>
                       <TableCell
@@ -114,9 +162,85 @@ export const LastTransactions = ({ ...props }) => {
                         {formattedValue.format(datas.amount)}
                       </TableCell>
                       <TableCell align="right">{datas.method}</TableCell>
+                      <TableCell className="w-5!" align="right">
+                        <Button
+                          size="small"
+                          aria-controls={open ? 'split-button-menu' : undefined}
+                          aria-expanded={open ? 'true' : undefined}
+                          aria-label="select merge strategy"
+                          aria-haspopup="menu"
+                          onClick={(event) => {
+                            setSelectId(datas.id)
+                            setTransactionToEdit(datas)
+                            handleOnToggle(event)
+                            }}
+                        >
+                          <MoreHorizIcon />
+                        </Button>
+                      </TableCell>
                     </TableRow>
-                  );
-                })}
+                  )})}
+                      <Popper
+                    
+                        open={open}
+                        anchorEl={anchorEl}
+                        transition
+                      >
+                        {({ TransitionProps, placement }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{
+                              transformOrigin:
+                                placement === 'bottom' ? 'center top' : 'center bottom'
+                            }}
+                          >
+                            <Paper>
+                              <ClickAwayListener onClickAway={handleClose}>
+                                  <MenuList id="split-button-menu" autoFocusItem>
+                                    { options.map ((option, index) => (
+                                      <MenuItem
+                                        key={option}
+                                        selected={index === selectedIndex}
+                                        onClick={(event) => {
+                                          handleMenuItemclick(event, index)
+                                          if(option === "Apagar") {
+                                            deleteTransaction(selectId)
+                                          }
+                                          if(option === "Editar" && transactionToEdit?.type === "INCOME") {
+                                            setIsIncomeModalOpen(true)
+                                          }
+                                          if(option === "Editar" && transactionToEdit?.type === "EXPENSE") {
+                                            setIsExpenseModalOpen(true)
+                                          }
+
+                                        }}
+                                      >
+                                        {option}
+                                      </MenuItem>
+                                    ))}
+                                  </MenuList>
+                              </ClickAwayListener>
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
+
+                      <IncomeModal 
+                        open={isIncomeModalOpen}
+                        onClose={() => {
+                          setIsIncomeModalOpen(false);
+                          setTransactionToEdit(null)
+                        }}                      
+                        transactionToEdit={transactionToEdit}
+                      />
+                      <ExpenseModal
+                        open={isExpenseModalOpen}
+                        onClose={() => {
+                          setIsExpenseModalOpen(false);
+                          setTransactionToEdit(null)
+                        }}                      
+                        transactionToEdit={transactionToEdit}
+                      />
           </TableBody>
         </Table>
       </TableContainer>
