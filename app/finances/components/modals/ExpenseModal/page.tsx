@@ -34,7 +34,7 @@ export const ExpenseModal = ({ open, onClose, transactionToEdit }: ExpenseModalP
             }
             reset(formattedDate)
         } else {
-            reset({ name: "", amount: 0, category: "", method: "", date: ""})
+            reset({ name: "", amount: "", category: "", method: "", date: ""})
         }
     },[open, reset, transactionToEdit])
 

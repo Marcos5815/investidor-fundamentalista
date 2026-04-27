@@ -9,7 +9,8 @@ export const addTransactionSchema = z.object({
         z.coerce.number().positive("O valor deve ser maior que zero")),
     category: z.string(),
     method: z.string(),
-    date: z.coerce.date()
+    date: z.coerce.date(),
+    methodCategory: z.array(z.any()).default([]).optional()
 })
 
 export type addTransactionSchema = z.infer<typeof addTransactionSchema>

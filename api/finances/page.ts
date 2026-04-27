@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import { addTransactionSchema } from '../../app/finances/components/modals/Schema/page';
+import { DataTypesMethodCategory } from "../methodCategory/page";
 
 const BASE_URL = "http://localhost:5000/finances_transactions";
 
@@ -17,6 +18,7 @@ export interface DataTypes {
   method: string;
   createdAt: string;
   editedAt?: string;
+  methodCategory: DataTypesMethodCategory[];
 }
 
 

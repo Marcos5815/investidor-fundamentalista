@@ -89,15 +89,6 @@
       "editedAt": ""
     },
     {
-      "name": "test",
-      "amount": 200,
-      "category": "13° Salári",
-      "method": "Doc",
-      "date": "2026-04-01T00:00:00.000Z",
-      "editedAt": "2026-04-20T01:10:28.257Z",
-      "id": "ALunZOFnVzg"
-    },
-    {
       "id": "859vdN34Umo",
       "name": "test",
       "amount": 250.5,
@@ -306,6 +297,128 @@
       "date": "2026-04-19T00:00:00.000Z",
       "editedAt": "2026-04-20T01:10:57.782Z",
       "id": "QBTcKpw7rqI"
+    }
+  ],
+  "methodCategory": [
+    {
+      "id": "3",
+      "category": "Renda extra",
+      "isCategory": true,
+      "type": "INCOME"
+    },
+    {
+      "id": "4",
+      "category": "Férias",
+      "isCategory": true,
+      "type": "INCOME"
+    },
+    {
+      "id": "6",
+      "category": "Outros",
+      "isCategory": true,
+      "type": "INCOME"
+    },
+    {
+      "id": "7",
+      "method": "Pix",
+      "isCategory": false,
+      "type": "INCOME"
+    },
+    {
+      "id": "8",
+      "method": "Doc",
+      "isCategory": false,
+      "type": "INCOME"
+    },
+    {
+      "id": "9",
+      "method": "Ted",
+      "isCategory": false,
+      "type": "INCOME"
+    },
+    {
+      "id": "10",
+      "method": "Depósito",
+      "isCategory": false,
+      "type": "INCOME"
+    },
+    {
+      "id": "11",
+      "category": "Aluguel",
+      "isCategory": true,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "12",
+      "category": "Lazer",
+      "isCategory": true,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "13",
+      "category": "Streaming",
+      "isCategory": true,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "14",
+      "category": "Veículos",
+      "isCategory": true,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "15",
+      "category": "Contas recorrentes",
+      "isCategory": true,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "16",
+      "category": "Outros",
+      "isCategory": true,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "17",
+      "method": "Pix",
+      "isCategory": false,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "18",
+      "method": "Cartão de crédito",
+      "isCategory": false,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "19",
+      "method": "Cartão de débito",
+      "isCategory": false,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "20",
+      "method": "Dinheiro",
+      "isCategory": false,
+      "type": "EXPENSE"
+    },
+    {
+      "id": "2m4aFaC58WQ",
+      "category": "Test 1",
+      "isCategory": true,
+      "type": "INCOME"
+    },
+    {
+      "id": "nHIKIcm8Kgg",
+      "category": "Test 2",
+      "isCategory": true,
+      "type": "INCOME"
+    },
+    {
+      "id": "CuXSgLdiMCY",
+      "category": "Salário",
+      "isCategory": true,
+      "type": "INCOME"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

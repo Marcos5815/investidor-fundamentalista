@@ -180,6 +180,8 @@ export const LastTransactions = ({ ...props }) => {
                       </TableCell>
                     </TableRow>
                   )})}
+          </TableBody>
+        </Table>
                       <Popper
                     
                         open={open}
@@ -241,8 +243,6 @@ export const LastTransactions = ({ ...props }) => {
                         }}                      
                         transactionToEdit={transactionToEdit}
                       />
-          </TableBody>
-        </Table>
       </TableContainer>
       <Table>
         <TableBody>
