@@ -46,7 +46,7 @@ export const InputTags = ({value = [], onChange, open, onClose}: ValueType) => {
                         <TextField 
                             {...params}
                             variant="outlined"
-                            label="Adicionar itens"
+                            label=""
                             placeholder="Digite e aperte Enter"
                             autoFocus
                         />

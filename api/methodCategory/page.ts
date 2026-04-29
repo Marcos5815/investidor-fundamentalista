@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
-import { uuidv4 } from "zod"
+import { uuidv4, ZodIPv4, ZodUUID } from "zod"
 
 const BASE_URL = "http://localhost:5000/methodCategory"
 
 export interface DataTypesMethodCategory {
-    "id": string,
+    "id": ZodUUID,
     "category"?: string,
     "isCategory": boolean,
     "method"?: string,
-    "type": "INCOME" | "EXPENSE" 
+    "type": "INCOME" | "EXPENSE" | string
 }
 
 export const useMethodCategory = () => {
@@ -34,7 +34,6 @@ export const useMethodCategory = () => {
     const addData = async (formData: DataTypesMethodCategory): Promise<DataTypesMethodCategory> => {
         try {
             const response = await axios.post(BASE_URL, {
-                id: uuidv4(),
                 ...formData
             })
             return response.data

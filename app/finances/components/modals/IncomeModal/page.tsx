@@ -10,6 +10,7 @@ import { DataTypes, useFinance } from "@/api/finances/page";
 import { addTransactionSchema } from "../Schema/page";
 import { DataTypesMethodCategory, useMethodCategory } from "@/api/methodCategory/page";
 import { InputTags } from "../../InputTags/page";
+import { uuidv4 } from "zod";
 
 interface TransactionModalProps {
     open: boolean;
@@ -20,7 +21,7 @@ interface TransactionModalProps {
 export const IncomeModal = ({ open, onClose, transactionToEdit }: TransactionModalProps) => {
 
     const { mutate, updateMutation } = useFinance()
-    const { data: allMethodCategories, isLoading, mutateMethodCategory, isPendindMethodCategory, deleteMethodCategory, isDeletingMethodCategory } = useMethodCategory()
+    const { data: allMethodCategories, mutateMethodCategory, deleteMethodCategory } = useMethodCategory()
     const { control, register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(addTransactionSchema),
         mode: "onChange",
@@ -30,10 +31,15 @@ export const IncomeModal = ({ open, onClose, transactionToEdit }: TransactionMod
             methodCategory: []
         }
     })
-    const [ inputTagsOpen, setInputTagsOpen ] = useState(false)
+    const [ inputCategoryTagsOpen, setInputCategoryTagsOpen ] = useState(false)
+    const [ inputMethodTagsOpen, setInputMethodTagsOpen ] = useState(false)
 
-    const handleInputTagsOpen = () => {
-        setInputTagsOpen((prev) => !prev)
+    const handleCategoryInputTagsOpen = () => {
+        setInputCategoryTagsOpen((prev) => !prev)
+    }
+
+    const handleMethodInputTagsOpen = () => {
+        setInputMethodTagsOpen((prev) => !prev)
     }
 
 
@@ -156,7 +162,7 @@ export const IncomeModal = ({ open, onClose, transactionToEdit }: TransactionMod
                                         </Select>
                                     )}
                                 />
-                                <Button onClick={handleInputTagsOpen} className="h-10!">
+                                <Button onClick={handleCategoryInputTagsOpen} className="h-10!">
                                     <AddCircleOutlineIcon />
                                 </Button>
                             </Box>
@@ -183,7 +189,7 @@ export const IncomeModal = ({ open, onClose, transactionToEdit }: TransactionMod
                                     )}
                                 />
 
-                            <Button className="h-10!">
+                            <Button onClick={handleMethodInputTagsOpen} className="h-10!">
                                 <AddCircleOutlineIcon />
                             </Button>
                                 </Box>
@@ -205,16 +211,17 @@ export const IncomeModal = ({ open, onClose, transactionToEdit }: TransactionMod
                         render={({ field }) => {
                             
                             const safeValue = Array.isArray(field.value) ? field.value : [];
-
-                            const currentItem = safeValue.filter((item: any) => 
-                                item.type === "INCOME" && item.isCategory === true
+                            console.log(field)
+                            const currentItem = safeValue.filter((item) => {
+                                return item.type === "INCOME" && item.isCategory === true
+                            }
+                                
                             )
-                            const tagValues = currentItem.map((item: any) => item.category)
-                            console.log(tagValues)
+                            const tagValues = currentItem.map((item) => item.category)
                             return (
                                 <InputTags 
-                                    open={inputTagsOpen}
-                                    onClose={() => setInputTagsOpen(false)}
+                                    open={inputCategoryTagsOpen}
+                                    onClose={() => setInputCategoryTagsOpen(false)}
                                     value={tagValues}
                                     onChange={(newNames) => {
                                         if (newNames.length < tagValues.length) {
@@ -227,6 +234,49 @@ export const IncomeModal = ({ open, onClose, transactionToEdit }: TransactionMod
                                         } else {
                                             const addedName = newNames[newNames.length - 1];
                                             const newObj = {
+                                                id: uuidv4(),
+                                                category: addedName,
+                                                isCategory: true,
+                                                type: "INCOME"
+                                            };
+
+                                            handleSubmitMethodCategory(newObj)
+                                        }
+                                    }}
+                            />
+                            )
+                        }}
+
+                    />
+                    <Controller 
+                        name="methodCategory"
+                        control={control}
+                        render={({ field }) => {
+                            
+                            const safeValue = Array.isArray(field.value) ? field.value : [];
+                            const currentItem = safeValue.filter((item) => {
+                                return item.type === "INCOME" && item.isCategory === false
+                            }
+                                
+                            )
+                            const tagValues = currentItem.map((item) => item.method)
+                            return (
+                                <InputTags 
+                                    open={inputMethodTagsOpen}
+                                    onClose={() => setInputMethodTagsOpen(false)}
+                                    value={tagValues}
+                                    onChange={(newNames) => {
+                                        if (newNames.length < tagValues.length) {
+                                            const removedName = tagValues.find(name => !newNames.includes(name));
+                                            const itemToRemove = currentItem.find(item => item.category === removedName);
+
+                                            if(removedName) {
+                                                deleteMethodCategory(itemToRemove.id)
+                                            }
+                                        } else {
+                                            const addedName = newNames[newNames.length - 1];
+                                            const newObj = {
+                                                id: uuidv4(),
                                                 category: addedName,
                                                 isCategory: true,
                                                 type: "INCOME"

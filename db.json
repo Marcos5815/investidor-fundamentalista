@@ -301,12 +301,6 @@
   ],
   "methodCategory": [
     {
-      "id": "3",
-      "category": "Renda extra",
-      "isCategory": true,
-      "type": "INCOME"
-    },
-    {
       "id": "4",
       "category": "Férias",
       "isCategory": true,
@@ -401,18 +395,6 @@
       "method": "Dinheiro",
       "isCategory": false,
       "type": "EXPENSE"
-    },
-    {
-      "id": "2m4aFaC58WQ",
-      "category": "Test 1",
-      "isCategory": true,
-      "type": "INCOME"
-    },
-    {
-      "id": "nHIKIcm8Kgg",
-      "category": "Test 2",
-      "isCategory": true,
-      "type": "INCOME"
     },
     {
       "id": "CuXSgLdiMCY",

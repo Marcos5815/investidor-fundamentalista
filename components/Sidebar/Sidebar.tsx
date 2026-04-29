@@ -2,9 +2,8 @@
 
 import { Button, Paper } from '@mui/material';
 import Box from '@mui/material/Box';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
@@ -31,13 +30,13 @@ export const Sidebar = () => {
             </Box>
             <Box className="mt-20 h-90 flex flex-col justify-around">
                 <Link href="/dashboard">
-                    <Button variant={page('/dashboard')}><DashboardIcon color={iconColor('/dashboard')}/> </Button>
+                    <Button variant={page('/Profile')}><AccountBoxIcon color={iconColor('/dashboard')}/> </Button>
                 </Link>
                 <Link href="/finances">
                     <Button variant={page('/finances')}><AccountBalanceWalletIcon color={iconColor('/finances')}/> </Button>
                 </Link>
                 <Link href="/wallet">
-                    <Button variant={page('/wallet')}><ShowChartIcon color={iconColor('/wallet')}/></Button>
+                    <Button variant={page('/configuration')}><SettingsIcon color={iconColor('/wallet')}/></Button>
                 </Link>
             </Box>
         </Box>
